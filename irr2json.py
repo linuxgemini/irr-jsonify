@@ -16,7 +16,9 @@ template = {
         "generated": tm,
         "valid": tm + 7200
     },
-    "roas": []
+    "roas": [
+        "[[[REPLACEME]]]",
+    ]
 }
 
 if os.path.exists(export_file):
@@ -65,11 +67,12 @@ with open(import_file, "r") as f:
 with open(export_file, "w") as f_out:
     with open(f"{export_file}.lock", "w") as f_out_lock:
         f_out_lock.write("")
-    json.dump(template, f_out, indent=4)
+        print("Lockfile written, don't touch the export file!")
+    json.dump(template, f_out)
 
 
 os.remove(f"{export_file}.lock")
 
-print(f"Written everything to {export_file}")
+print(f"Written everything to {export_file}, lockfile removed")
 
 os._exit(0)
