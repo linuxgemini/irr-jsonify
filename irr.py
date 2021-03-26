@@ -2,7 +2,7 @@
 
 export_file = "./irr.db"
 
-
+from threading import Thread
 import urllib.request as request
 import os
 import shutil
@@ -49,7 +49,7 @@ if os.path.exists(export_file):
 
 os.mkdir("./dbs")
 
-for irr_source in irr_sources:
+def download(irr_source):
     gz_filename = irr_source.split("/")[-1]
     filename = rx.sub("", gz_filename)
 
@@ -71,6 +71,14 @@ for irr_source in irr_sources:
         if os.path.exists(f"./dbs/{filename}"):
             os.remove(f"./dbs/{filename}")
 
+threads = []
+for irr_source in irr_sources:
+    thread = Thread(target=download, args=(irr_source,))
+    thread.start()
+    threads.append(thread)
+
+for thread in threads:
+    thread.join()
 
 with open(export_file, "w") as f_out:
     for irr_db in irr_dbs:
