@@ -88,6 +88,8 @@ def download(irr_source, irr_current_serial):
         print(f"Written {filename}")
     except Exception as e:
         print(f"Error on writing {filename}, error:\n{str(e)}")
+        if os.path.exists(f"./dbs/{serial_filename}"):
+            os.remove(f"./dbs/{serial_filename}")
         if os.path.exists(f"./dbs/{filename}"):
             os.remove(f"./dbs/{filename}")
 
