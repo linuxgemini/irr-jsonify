@@ -26,7 +26,7 @@ with open(export_file, "w") as f_out:
 
                 if (attrib == "route:" or attrib == "route6:") and len(val) > 0:
                     ip = val.lower()
-                
+
                 if attrib == "origin:" and len(val) > 0:
                     if not val.startswith("AS"):
                         val = f"AS{val}"
@@ -42,7 +42,7 @@ with open(export_file, "w") as f_out:
         print(f"Processed a total of {cnt} object(s)")
     # remove final empty newline
     f_out.seek(0, os.SEEK_END)
-    pos = f_out.tell() - 2
+    pos = f_out.tell() - 1
     f_out.seek(pos, os.SEEK_SET)
     f_out.truncate()
 

@@ -63,7 +63,7 @@ def download(irr_source, irr_current_serial):
     else:
         f = open(f"./dbs/{serial_filename}", "w")
         update = True
-    
+
     if not update:
         irr_dbs.append(f"./dbs/{filename}")
         return

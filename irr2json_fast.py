@@ -38,7 +38,7 @@ with open(export_file, "w") as f_out:
 
                 if (attrib == "route:" or attrib == "route6:") and len(val) > 0:
                     prefix = val.lower()
-                
+
                 if attrib == "origin:" and len(val) > 0:
                     if not val.startswith("AS"):
                         val = f"AS{val}"

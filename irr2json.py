@@ -36,7 +36,7 @@ with open(import_file, "r") as f:
 
             if (attrib == "route:" or attrib == "route6:") and len(val) > 0:
                 ip = val
-            
+
             if attrib == "origin:" and len(val) > 0:
                 if not val.startswith("AS"):
                     val = f"AS{val}"
