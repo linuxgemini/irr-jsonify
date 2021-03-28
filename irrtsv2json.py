@@ -4,7 +4,6 @@ import_file = "./irrdb.tsv"
 export_file = "./irrdb.json"
 
 
-import json
 import os
 import time
 
