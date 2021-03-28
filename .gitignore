@@ -132,3 +132,5 @@ dbs/
 irr.db
 irrdb.json
 irrdb.json.lock
+irrdb.tsv
+irrdb.tsv.lock
