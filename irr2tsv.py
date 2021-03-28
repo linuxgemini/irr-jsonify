@@ -7,6 +7,16 @@ export_file = "./irrdb.tsv"
 import os
 
 
+def asdot_to_asplain(str):
+    split = str.split(".")
+    if len(split) == 2:
+        dot = int(split[0] or "0")
+        add = int(split[1] or "0")
+        return (dot * 65536) + add
+    else:
+        return None
+
+
 if os.path.exists(export_file):
     os.remove(export_file)
 
@@ -28,9 +38,11 @@ with open(export_file, "w") as f_out:
                     ip = val.lower()
 
                 if attrib == "origin:" and len(val) > 0:
-                    if not val.startswith("AS"):
-                        val = f"AS{val}"
-                    originator = val
+                    val = val.replace("AS", "")
+                    if "." not in val:
+                        originator = f"AS{val}"
+                    else:
+                        originator = f"AS{asdot_to_asplain(val)}"
 
                 if ip and originator:
                     f_out.write(f"{ip}\t\t{originator}\n")

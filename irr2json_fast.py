@@ -7,13 +7,14 @@ export_file = "./irrdb.json"
 import os
 
 
-def file_len(fname):
-    i = 0
-    with open(fname) as f:
-        for line in f:
-            if line.strip() != "":
-                i += 1
-    return i
+def asdot_to_asplain(str):
+    split = str.split(".")
+    if len(split) == 2:
+        dot = int(split[0] or "0")
+        add = int(split[1] or "0")
+        return (dot * 65536) + add
+    else:
+        return None
 
 
 with open(export_file, "w") as f_out:
@@ -40,9 +41,11 @@ with open(export_file, "w") as f_out:
                     prefix = val.lower()
 
                 if attrib == "origin:" and len(val) > 0:
-                    if not val.startswith("AS"):
-                        val = f"AS{val}"
-                    asn = val
+                    val = val.replace("AS", "")
+                    if "." not in val:
+                        asn = f"AS{val}"
+                    else:
+                        asn = f"AS{asdot_to_asplain(val)}"
 
                 if prefix and asn:
                     if "." in prefix:
