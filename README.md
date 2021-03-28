@@ -4,8 +4,7 @@ for disk io intensive approach:
 
 ```
 python3 irr.py
-python3 irr2tsv.py
-python3 irrtsv2json.py
+python3 irr2json_fast.py
 ```
 
 
