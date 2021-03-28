@@ -17,7 +17,6 @@ template = {
         "valid": tm + 7200
     },
     "roas": [
-        "[[[REPLACEME]]]",
     ]
 }
 
