@@ -49,11 +49,11 @@ with open(import_file, "r") as f:
                 ip = val
 
             if attrib == "origin:" and len(val) > 0:
-                    val = val.replace("AS", "")
-                    if "." not in val:
-                        originator = f"AS{val}"
-                    else:
-                        originator = f"AS{asdot_to_asplain(val)}"
+                val = val.replace("AS", "")
+                if "." not in val:
+                    originator = f"AS{val}"
+                else:
+                    originator = f"AS{asdot_to_asplain(val)}"
 
             if ip and originator:
                 if "." in ip:
