@@ -38,39 +38,42 @@ with open(import_file, "r") as f:
     line = f.readline()
     ip = None
     originator = None
+    next_proc_item = "route"
     cnt = 0
     while line:
         variables = line.split(":")
-        if len(variables) == 2:
-            attrib = variables[0].strip().lower()
-            val = variables[1].strip().upper()
+        
+        attrib = variables[0].strip().lower() or ""
+        val = variables[1].strip().upper() or ""
 
-            if (attrib == "route" or attrib == "route6") and len(val) > 0:
-                ip = val
+        if attrib.startswith("route") and attrib.startswith(next_proc_item) and len(val) > 0:
+            ip = val
+            next_proc_item = "origin"
 
-            if attrib == "origin" and len(val) > 0:
-                val = val.replace("AS", "")
-                if "." not in val:
-                    originator = f"AS{val}"
-                else:
-                    originator = f"AS{asdot_to_asplain(val)}"
+        if attrib.startswith("origin") and attrib.startswith(next_proc_item) and len(val) > 0:
+            val = val.replace("AS", "")
+            if "." not in val:
+                originator = f"AS{val}"
+            else:
+                originator = f"AS{asdot_to_asplain(val)}"
 
-            if ip and originator:
-                if "." in ip:
-                    maxlen = 24
-                else:
-                    maxlen = 48
+        if ip and originator:
+            if "." in ip:
+                maxlen = 24
+            else:
+                maxlen = 48
 
-                template["roas"].append({
-                    "asn": originator,
-                    "prefix": ip,
-                    "maxLength": maxlen,
-                    "ta": "irr-jsonify"
-                })
-                cnt += 1
+            template["roas"].append({
+                "asn": originator,
+                "prefix": ip,
+                "maxLength": maxlen,
+                "ta": "irr-jsonify"
+            })
+            cnt += 1
 
-                ip = None
-                originator = None
+            ip = None
+            originator = None
+            next_proc_item = "route"
         line = f.readline()
     print(f"Processed {cnt} object(s)")
     template["metadata"]["counts"] = cnt

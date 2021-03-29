@@ -31,36 +31,38 @@ with open(export_file, "w") as f_out:
         line = f_in.readline()
         prefix = None
         asn = None
+        next_proc_item = "route"
         cnt = 0
         while line:
             variables = line.split(":")
 
-            if len(variables) == 2:
-                attrib = variables[0].strip().lower()
-                val = variables[1].strip().upper()
+            attrib = variables[0].strip().lower() or ""
+            val = variables[1].strip().upper() or ""
 
-                if (attrib == "route" or attrib == "route6") and len(val) > 0:
-                    prefix = val.lower()
+            if attrib.startswith("route") and attrib.startswith(next_proc_item) and len(val) > 0:
+                prefix = val.lower()
+                next_proc_item = "origin"
 
-                if attrib == "origin" and len(val) > 0:
-                    val = val.replace("AS", "")
-                    if "." not in val:
-                        asn = f"AS{val}"
-                    else:
-                        asn = f"AS{asdot_to_asplain(val)}"
+            if attrib.startswith("origin") and attrib.startswith(next_proc_item) and len(val) > 0:
+                val = val.replace("AS", "")
+                if "." not in val:
+                    asn = f"AS{val}"
+                else:
+                    asn = f"AS{asdot_to_asplain(val)}"
 
-                if prefix and asn:
-                    if "." in prefix:
-                        maxlen = 24
-                    elif ":" in prefix:
-                        maxlen = 48
-                    else:
-                        maxlen = 1
+            if prefix and asn:
+                if "." in prefix:
+                    maxlen = 24
+                elif ":" in prefix:
+                    maxlen = 48
+                else:
+                    maxlen = 1
 
-                    f_out.write(f"\n        {{\"asn\": \"{asn}\", \"prefix\": \"{prefix}\", \"maxLength\": {maxlen}, \"ta\": \"irr-jsonify\"}},")
-                    proc_cnt += 1
-                    prefix = None
-                    asn = None
+                f_out.write(f"\n        {{\"asn\": \"{asn}\", \"prefix\": \"{prefix}\", \"maxLength\": {maxlen}, \"ta\": \"irr-jsonify\"}},")
+                proc_cnt += 1
+                prefix = None
+                asn = None
+                next_proc_item = "route"
 
             line = f_in.readline()
         if proc_cnt > 0:
