@@ -75,7 +75,7 @@ with open(export_file, "w") as f_out:
         "    \"metadata\": {\n",
         "        \"builder\": \"irr2json\",\n",
         f"        \"generated\": {tm},\n",
-        f"        \"valid\": {tm + 86400}\n",
+        f"        \"valid\": {tm + 86400},\n",
         f"        \"counts\": {proc_cnt}\n",
         "    }\n",
         "}"
