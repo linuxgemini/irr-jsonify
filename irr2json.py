@@ -14,7 +14,7 @@ template = {
     "metadata": {
         "builder": "irr2json",
         "generated": tm,
-        "valid": tm + 7200
+        "valid": tm + 86400
     },
     "roas": [
     ]
