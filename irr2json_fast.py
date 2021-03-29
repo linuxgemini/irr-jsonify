@@ -33,16 +33,16 @@ with open(export_file, "w") as f_out:
         asn = None
         cnt = 0
         while line:
-            variables = line.split()
+            variables = line.split(":")
 
             if len(variables) == 2:
-                attrib = variables[0].lower()
-                val = variables[1].upper()
+                attrib = variables[0].strip().lower()
+                val = variables[1].strip().upper()
 
-                if (attrib == "route:" or attrib == "route6:") and len(val) > 0:
+                if (attrib == "route" or attrib == "route6") and len(val) > 0:
                     prefix = val.lower()
 
-                if attrib == "origin:" and len(val) > 0:
+                if attrib == "origin" and len(val) > 0:
                     val = val.replace("AS", "")
                     if "." not in val:
                         asn = f"AS{val}"
