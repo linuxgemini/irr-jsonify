@@ -107,20 +107,22 @@ with open(export_file, "w") as f_out:
         print(f"Processing {irr_db}")
         with open(irr_db, "rb") as f_in:
             line = f_in.readline()
+            next_proc_item = ("route:", "route6:")
             cnt = 0
             while line:
                 try:
-                    line_text = line.decode()
+                    line_text = line.decode().lower()
                 except Exception as e:
                     pass
 
-                if (
-                    line_text.startswith("route:") or
-                    line_text.startswith("route6:") or
-                    line_text.startswith("origin:")
-                ):
+                if line_text.startswith(("route:", "route6:")) and line_text.startswith(next_proc_item):
                     f_out.write(f"{line_text}")
                     cnt += 1
+                    next_proc_item = "origin:"
+                elif line_text.startswith("origin:") and line_text.startswith(next_proc_item):
+                    f_out.write(f"{line_text}")
+                    cnt += 1
+                    next_proc_item = ("route:", "route6:")
 
                 line = f_in.readline()
             print(f"Processed {cnt} line(s)")
