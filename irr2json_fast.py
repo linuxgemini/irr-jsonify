@@ -61,11 +61,12 @@ with open(export_file, "w") as f_out:
                     asn = None
 
             line = f_in.readline()
-        # remove last comma
-        f_out.seek(0, os.SEEK_END)
-        pos = f_out.tell() - 1
-        f_out.seek(pos, os.SEEK_SET)
-        f_out.truncate()
+        if proc_cnt > 0:
+            # remove last comma
+            f_out.seek(0, os.SEEK_END)
+            pos = f_out.tell() - 1
+            f_out.seek(pos, os.SEEK_SET)
+            f_out.truncate()
 
     f_out.writelines([
         "\n    ],\n",
