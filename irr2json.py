@@ -44,7 +44,7 @@ with open(import_file, "r") as f:
         variables = line.split(":")
         
         attrib = variables[0].strip().lower() or ""
-        val = (":".join(variables[1:])).strip().upper() or ""
+        val = (":".join(variables[1:])).strip().split()[0].upper() or ""
 
         if attrib.startswith("route") and attrib.startswith(next_proc_item) and len(val) > 0:
             ip = val
