@@ -39,16 +39,17 @@ with open(export_file, "w") as f_out:
             attrib = variables[0].strip().lower() or ""
             val = (":".join(variables[1:])).strip().split()[0].upper() or ""
 
-            if attrib.startswith("route") and attrib.startswith(next_proc_item) and len(val) > 0:
-                prefix = val.lower()
-                next_proc_item = "origin"
+            if attrib.startswith(next_proc_item) and len(val) > 0:
+                if attrib.startswith("route"):
+                    prefix = val.lower()
+                    next_proc_item = "origin"
 
-            if attrib.startswith("origin") and attrib.startswith(next_proc_item) and len(val) > 0:
-                val = val.replace("AS", "")
-                if "." not in val:
-                    asn = f"AS{val}"
-                else:
-                    asn = f"AS{asdot_to_asplain(val)}"
+                if attrib.startswith("origin"):
+                    val = val.replace("AS", "")
+                    if "." not in val:
+                        asn = f"AS{val}"
+                    else:
+                        asn = f"AS{asdot_to_asplain(val)}"
 
             if prefix and asn:
                 if "." in prefix:
