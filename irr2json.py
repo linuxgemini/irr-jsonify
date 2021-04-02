@@ -61,16 +61,25 @@ with open(import_file, "r") as f:
         if ip and originator:
             if "." in ip:
                 maxlen = 24
-            else:
+                prefixlen = 32
+            elif ":" in ip:
                 maxlen = 48
+                prefixlen = 128
+            else:
+                maxlen = 1
+                prefixlen = 32
 
-            template["roas"].append({
-                "asn": originator,
-                "prefix": ip,
-                "maxLength": maxlen,
-                "ta": "irr-jsonify"
-            })
-            cnt += 1
+            if "/" in ip:
+                prefixlen = int(ip.split("/")[1])
+
+            if prefixlen <= maxlen:
+                template["roas"].append({
+                    "asn": originator,
+                    "prefix": ip,
+                    "maxLength": maxlen,
+                    "ta": "irr-jsonify"
+                })
+                cnt += 1
 
             ip = None
             originator = None

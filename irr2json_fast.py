@@ -54,13 +54,20 @@ with open(export_file, "w") as f_out:
             if prefix and asn:
                 if "." in prefix:
                     maxlen = 24
+                    prefixlen = 32
                 elif ":" in prefix:
                     maxlen = 48
+                    prefixlen = 128
                 else:
                     maxlen = 1
+                    prefixlen = 32
 
-                f_out.write(f"\n        {{\"asn\": \"{asn}\", \"prefix\": \"{prefix}\", \"maxLength\": {maxlen}, \"ta\": \"irr-jsonify\"}},")
-                proc_cnt += 1
+                if "/" in prefix:
+                    prefixlen = int(prefix.split("/")[1])
+
+                if prefixlen <= maxlen:
+                    f_out.write(f"\n        {{\"asn\": \"{asn}\", \"prefix\": \"{prefix}\", \"maxLength\": {maxlen}, \"ta\": \"irr-jsonify\"}},")
+                    proc_cnt += 1
                 prefix = None
                 asn = None
                 next_proc_item = "route"
