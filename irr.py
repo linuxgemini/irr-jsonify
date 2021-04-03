@@ -22,10 +22,10 @@ irr_sources = [
     ["ftp://ftp.radb.net/radb/dbase/arin-nonauth.db.gz", "ftp://ftp.radb.net/radb/dbase/ARIN-NONAUTH.CURRENTSERIAL"],
     ["ftp://ftp.radb.net/radb/dbase/arin.db.gz","ftp://ftp.radb.net/radb/dbase/ARIN.CURRENTSERIAL"],
     ["ftp://ftp.altdb.net/pub/altdb/altdb.db.gz", "ftp://ftp.altdb.net/pub/altdb/ALTDB.CURRENTSERIAL"],
-    #"ftp.newaol.com/pub/aol-irr/dbase/aoltw.db.gz", # dead
-    #"ftp://whois.in.bell.ca/bell/bell.db.gz", # inaccesible
+    #"ftp.newaol.com/pub/aol-irr/dbase/aoltw.db.gz", # dead, confirmed
+    ["ftp://whois.in.bell.ca/bell.db.gz", "ftp://whois.in.bell.ca/BELL.CURRENTSERIAL"],
     ["ftp://whois.canarie.ca/dbase/canarie.db.gz", "ftp://whois.canarie.ca/dbase/CURRENTSERIAL"],
-    #"ftp://irr-mirror.idnic.net/idnic.db.gz", # times out
+    #"ftp://irr-mirror.idnic.net/idnic.db.gz", # times out, confirmed
     ["ftp://ftp.apnic.net/public/apnic/whois-data/JPIRR/jpirr.db.gz", "ftp://ftp.apnic.net/public/apnic/whois-data/JPIRR/JPIRR.CURRENTSERIAL"],
     ["ftp://ftp.nestegg.net/irr/nestegg.db.gz", "ftp://ftp.nestegg.net/irr/NESTEGG.CURRENTSERIAL"],
     ["ftp://rr1.ntt.net/nttcomRR/nttcom.db.gz", "ftp://rr1.ntt.net/nttcomRR/NTTCOM.CURRENTSERIAL"],
